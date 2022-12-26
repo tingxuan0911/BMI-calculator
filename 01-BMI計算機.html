@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        #container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            background-color: antiquewhite;
+
+        }
+
+        .bmi {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            align-items: center;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -100%);
+            padding: 80px 10px;
+            width: 500px;
+            height: 300px;
+            border: 1px solid #000;
+            background-color: lightblue;
+        }
+
+        .entere {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            padding: 0 30px;
+            width: 500px;
+            font-size: 18px;
+        }
+
+        #height,
+        #weight {
+            margin: 0 5px;
+            width: 130px;
+        }
+
+        .calc,
+        .clean {
+            width: 300px;
+            height: 300px;
+        }
+
+        .result {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, 10%);
+            width: 300px;
+            height: 300px;
+            opacity: 0;
+        }
+
+        .result.in {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: lightpink;
+            opacity: 1;
+            transition: 1s;
+
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container">
+        <div class="bmi">
+            <div class="entere">
+                <div class="height">身高:<input id="height" type="number">cm</div>
+                <div class="weight">體重:<input id="weight" type="number">kg</div>
+            </div>
+            <button class="calc">計算BMI</button><br>
+            <button class="clean">清除重算</button>
+        </div>
+        <div class="result">
+        </div>
+    </div>
+
+
+    <script>
+        var result = document.querySelector('.result')
+        var height = document.querySelector('#height')
+        var weight = document.querySelector('#weight')
+        var calcBtn = document.querySelector('.calc')
+        var cleanBtn = document.querySelector('.clean')
+
+
+        calcBtn.onclick = function () {
+            result.classList.add('in')
+
+            var h = height.value
+            var w = weight.value
+            // ----------------------------------------------------------------------
+            if (isNaN(parseInt(h)) || isNaN(parseInt(w))) {
+                result.innerHTML = '請輸入數字'
+            } else if (h <= 0 || w <= 0) {
+                result.innerHTML = '請正確輸入1~100的整數!!'
+            } else {
+                var bmi = w / ((h / 100) * (h / 100)).toFixed(2) //四捨五入到第幾位數
+
+                if (bmi >= 35) {
+                    result.innerHTML = "你的BMI:" + bmi + '/重度肥胖' + '/168 8起來'
+                } else if (bmi >= 30) {
+                    result.innerHTML = "你的BMI:" + bmi + '/中度肥胖' + '/少吃澱粉阿'
+                } else if (bmi >= 27) {
+                    result.innerHTML = "你的BMI:" + bmi + '/輕度肥胖' + '/還敢不動阿'
+                } else if (bmi >= 24) {
+                    result.innerHTML = "你的BMI:" + bmi + '/胖' + '/衣服遮一下'
+                } else if (bmi >= 18.5) {
+                    result.innerHTML = "你的BMI:" + bmi + ' /正常' + '/你一定挑食'
+                } else {
+                    result.innerHTML = "你的BMI:" + bmi + '/過輕' + '/我不相信'
+                }
+            }
+
+        }
+        cleanBtn.onclick = function () {
+            result.classList.remove('in')
+            result.innerHTML = ('')
+            height.value = ''
+            weight.value = ''
+        }
+
+    </script>
+</body>
+
+</html>
